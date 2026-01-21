@@ -17,6 +17,7 @@ def cartoon_filter(frame):
 
 emoji = cv2.imread("moai.png", cv2.IMREAD_UNCHANGED) 
 crown = cv2.imread("crown.png", cv2.IMREAD_UNCHANGED)
+vader = cv2.imread("vader.png", cv2.IMREAD_UNCHANGED)
 
 def overlay_emoji(frame, emoji, x, y, w, h):
     emoji_resized = cv2.resize(emoji, (w, h))
@@ -68,15 +69,22 @@ while True:
     #Cartoon
     frame = cartoon_filter(frame)
 
-
+    moai_scale = 1.8
     #Emoji
     for (x, y, w, h) in faces:
-        w = int(w*2)
-        h = int(h*2)
+        w = int(w*1.8)
+        h = int(h*1.8)
         x = int(x - int(0.25*w))
         y = int(y - int(0.25*h))
         frame = overlay_emoji(frame, emoji, x, y, w, h)
 
+    #Vader
+    # for (x, y, w, h) in faces:
+    #   w = int(w*2)
+    #   h = int(h*2)
+    #   x = int(x - int(0.3*w))
+    #   y = int(y - int(0.25*h))
+    #   frame = overlay_emoji(frame, vader, x, y, w, h)
 
     #Crown
     for (x, y, w, h) in faces:
@@ -85,14 +93,11 @@ while True:
         x = int(x - int(0.25*w))
         y = int(y - int(h))
         frame = overlay_crown(frame, crown, x, y, w, h)
-
     
 
     cv2.imshow("Filter", frame)
 
-
-
-    if cv2.waitKey(1) & 0xFF == 27:  # ESC to quit
+    if cv2.waitKey(1) & 0xFF == 27:
         break
 
 cap.release()
